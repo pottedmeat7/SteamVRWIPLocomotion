@@ -10,7 +10,7 @@ public class VRStepDetect : MonoBehaviour
     public float stepHandThreshold = 0.3f;
     public float shakeHMDThreshold = 0.1f;
     public float shakeHandThreshold = 0.3f;
-    public float stepHMDRunThreshold = 0.1f;
+    //public float stepHMDRunThreshold = 0.1f;
     public float stepHandRunThreshold = 0.8f;
     public float walkSpeed = 1f;
     public float runSpeed = 2.3f;
@@ -46,7 +46,6 @@ public class VRStepDetect : MonoBehaviour
         try
         {
             viveHMD = SteamVR_Controller.Input((int)SteamVR_TrackedObject.EIndex.Hmd);
-            //playerMotor.setCharacterHeight(viveHMD.he)
             viveHand1_cont = SteamVR_Controller.Input(SteamVR_Controller.GetDeviceIndex(SteamVR_Controller.DeviceRelation.Leftmost));
             viveHand2_cont = SteamVR_Controller.Input(SteamVR_Controller.GetDeviceIndex(SteamVR_Controller.DeviceRelation.Rightmost));
         }
@@ -106,8 +105,6 @@ public class VRStepDetect : MonoBehaviour
                     {
                         dirForward *= walkSpeed;
                     }
-                    //player.transform.Translate(dirForward.x * speed, 0, dirForward.z * speed);
-
                     stepFrame = 0;
                     integratingStep = true;
                 }
@@ -115,10 +112,6 @@ public class VRStepDetect : MonoBehaviour
             else
             {
                 playerMotor.inputMoveDirection = dirForward;
-                //float dT = (float)(curTime - lastupdate);
-                //playerController.SimpleMove(dirForward * (stepDistance * dT));
-                //player.transform.Translate(dirForward.x * stepDistance * dT, 0, dirForward.z * stepDistance * dT);
-                //player.transform.Translate(dirForward.x * speed, 0, dirForward.z * speed);
                 stepFrame++;
 
                 if (stepFrame >= (framesPerStep / 2.0f))
@@ -204,13 +197,7 @@ public class VRStepDetect : MonoBehaviour
     private bool runDetect()
     {
         Vector3 velHMD = viveHMD.velocity;
-        //Debug.Log("HMD Vel X: " + velHMD.x);
-        //Debug.Log("HMD Vel Y: " + velHMD.y);
-        //Debug.Log("HMD Vel Z: " + velHMD.z);
         Vector3 velHand1 = viveHand1_cont.velocity;
-        //Debug.Log("hand 1 Vel X: " + velHand1.x);
-        //Debug.Log("hand 1 Vel Y: " + velHand1.y);
-        //Debug.Log("hand 1 Vel Z: " + velHand1.z);
         Vector3 velHand2 = viveHand2_cont.velocity;
         return (((velHand1.y > stepHandRunThreshold || velHand1.y < -stepHandRunThreshold)
                         || (velHand2.y > stepHandRunThreshold || velHand2.y < -stepHandRunThreshold))
