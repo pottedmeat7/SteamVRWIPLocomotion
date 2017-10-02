@@ -1,6 +1,6 @@
 # How to use
 
-Import VRStepDetect and CharacterMotor into you project
+Import VRStepDetect and CharacterMotor into your project
 
 Put SteamVR "CameraRig" into a parent object call it "Player"
 
